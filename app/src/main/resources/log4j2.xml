@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <!--
+        ${sys:java.io.tmpdir}
+        ${sys:user.home}
+
+        filePattern="$${sys:java.io.tmpdir}/xperia-export-%d{yyyyMMMdd-HH-mm}.%i.log - for SizeBasedTriggeringPolicy
+        filePattern="$${sys:java.io.tmpdir}/xperia-export.%i.log" - for OnStartupTriggeringPolicy
+    -->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+             <!-- PatternLayout pattern="%5p [%t] (%F:%L) - %m%n"/ -->
+             <PatternLayout pattern="%5p | %m%n"/>
+        </Console>
+        <RollingFile name="Rolling"
+            fileName="${sys:java.io.tmpdir}/staff-duty.log"
+            filePattern="$${sys:java.io.tmpdir}/staff-duty.%i.log">
+
+            <PatternLayout pattern="%d %5p [%t] (%F:%L) %m%n" />
+            <Policies>
+                <OnStartupTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+    <!-- TRACE, DEBUG, INFO, WARN, ERROR, ALL or OFF -->
+        <Root level="debug">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="Rolling" />
+        </Root>
+    </Loggers>
+</Configuration>

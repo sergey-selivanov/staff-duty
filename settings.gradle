@@ -8,7 +8,47 @@
 plugins {
     // Apply the foojay-resolver plugin to allow automatic download of JDKs
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+    // https://github.com/ajoberstar/reckon
+    id('org.ajoberstar.reckon.settings') version '2.0.0'
+    id 'io.github.ben-manes.versions.settings' version '0.61.0'
 }
 
-rootProject.name = 'junk'
-include('app')
+reckon {
+    defaultInferredScope = 'patch'
+    stages 'dev', 'final'
+    scopeCalc = calcScopeFromProp()
+    stageCalc = calcStageFromProp()
+}
+
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r|-jre|-android)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+gradle.rootProject {
+    tasks.withType(DependencyUpdatesTask).configureEach {
+        checkConstraints = true
+        //revision = 'release'
+
+        rejectVersionIf {
+            isNonStable(candidate.version)
+        }
+
+//        resolutionStrategy {
+//            componentSelection {
+//                all {
+//                    if (isNonStable(candidate.version)) {
+//                        reject('Release candidate')
+//                    }
+//                }
+//            }
+//        }
+    }
+}
+
+rootProject.name = 'duty'
+include 'app'
+project(":app").name = 'duty'
+

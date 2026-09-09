@@ -8,6 +8,10 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+
+    //id 'se.ascp.gradle.gradle-versions-filter' version '0.1.16'
+    id 'org.ajoberstar.grgit' version '5.3.3'
+    id 'org.beryx.jlink' version '4.1.1'
 }
 
 repositories {
@@ -16,13 +20,18 @@ repositories {
 }
 
 dependencies {
+
+    implementation 'commons-cli:commons-cli:1.11.0'
+
+    implementation 'org.slf4j:slf4j-api:2.0.19'
+    runtimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl:2.26.1'
+
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
-
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // This dependency is used by the application.
-    implementation libs.guava
+    //implementation libs.guava
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -34,10 +43,14 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'org.example.App'
+    mainClass = 'org.svs.duty.App'
 }
 
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+//tasks.named("dependencyUpdates").configure {
+//    revision = 'release'
+//}
