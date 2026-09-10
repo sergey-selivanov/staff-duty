@@ -5,6 +5,11 @@
         gradlew -Preckon.stage=final -Preckon.scope=major reckonTagPush
 
         https://git.sr.ht/~ajoberstar/reckon
+
+        On Windows, set 'git config core.fileMode false' for jgit + cygwin git
+
+    To run:
+        gradlew run --args="-in arg"
  */
 
 plugins {
