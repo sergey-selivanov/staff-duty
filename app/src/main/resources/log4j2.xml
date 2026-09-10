@@ -30,5 +30,6 @@
             <AppenderRef ref="Console" />
             <AppenderRef ref="Rolling" />
         </Root>
+        <Logger name="org.apache.poi" level="warn" />
     </Loggers>
 </Configuration>

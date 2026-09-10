@@ -26,6 +26,7 @@ dependencies {
 
     implementation 'commons-cli:commons-cli:1.11.0'
     implementation 'com.google.guava:guava:33.7.1-jre'
+    implementation 'org.apache.poi:poi-ooxml:5.5.1'
 
     implementation 'org.slf4j:slf4j-api:2.0.19'
     runtimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl:2.26.1'
